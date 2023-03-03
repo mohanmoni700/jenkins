@@ -5,7 +5,7 @@ parameters {
 
     agent any 
     stages {
-        stage('STAGE-1') {
+        stage('stage-1') {
             when {
                 stage == 'stage-1'
             }
