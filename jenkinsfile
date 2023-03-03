@@ -1,13 +1,17 @@
 pipeline {
+parameters {
+  choice choices: ['stage-1', 'stage-2'], description: 'selected stage will execute', name: 'stage'
+}
+
     agent any 
     stages {
         stage('STAGE-1') {
             when {
-                branch 'main'
+                stage == 'stage-1'
             }
             steps{
                 sh '''
-                echo "STEGE-2 executes if branch is master"
+                echo "STEGE-1 executes if branch is master"
                 '''
             }
         }
