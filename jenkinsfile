@@ -1,31 +1,27 @@
 pipeline {
-parameters {
-  string defaultValue: 'stage-1', name: 'stagename', trim: true
-}
-
-
     agent any 
+    parameters {
+        choice(name: 'STAGE_NAME', choices: ['STAGE-1', 'STAGE-2'], description: 'Enter stage name to execute ?')
+    }
     stages {
-        stage('stage-1') {
-            when {
-                stage == 'stage-1'
-            }
+        stage('STAGE-1') {
+            when { 
+                expression{ params.STAGE_NAME == "STAGE-1" }
+            }    
             steps{
-                sh '''
-                echo "STEGE-1 executes if branch is master"
-                '''
+                print "DEBUG: parameter STAGE_NAME = ${params.STAGE_NAME}"
             }
         }
 
         stage('STAGE-2'){
-            when {
-                branch 'test'
-            }
+            when { 
+                expression{ params.STAGE_NAME == "STAGE-2" }
+            }    
             steps{
-                sh '''
-                echo "STEGE-2 executes if branch is master"
-                '''
-            }
+                print "DEBUG: parameter STAGE_NAME = ${params.STAGE_NAME}"
+            }    
         }
     }
 }
+
+
