@@ -1,7 +1,8 @@
 pipeline {
 parameters {
-  choice choices: ['stage-1', 'stage-2'], description: 'selected stage will execute', name: 'stage'
+  string defaultValue: 'stage-1', name: 'stagename', trim: true
 }
+
 
     agent any 
     stages {
