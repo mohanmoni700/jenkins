@@ -1,24 +1,26 @@
 pipeline {
     agent any 
-    parameters {
-        choice(name: 'STAGE_NAME', choices: ['STAGE-1', 'STAGE-2'], description: 'Enter stage name to execute ?')
-    }
     stages {
         stage('STAGE-1') {
-            when { 
-                expression{ params.STAGE_NAME == "STAGE-1" }
-            }    
+           when {
+             branch 'main'
+            }
+   
             steps{
-                print "DEBUG: parameter STAGE_NAME = ${params.STAGE_NAME}"
+                sh '''
+                echo "this is stage since we are in main branch"
+                '''
             }
         }
 
         stage('STAGE-2'){
-            when { 
-                expression{ params.STAGE_NAME == "STAGE-2" }
-            }    
+                when {
+                        branch 'test'
+                 }  
             steps{
-                print "DEBUG: parameter STAGE_NAME = ${params.STAGE_NAME}"
+                sh '''
+                echo "this is stage2 we are in branch test"
+                '''
             }    
         }
     }
