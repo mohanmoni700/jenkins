@@ -1,29 +1,44 @@
 pipeline {
-    agent any 
-    stages {
-        stage('STAGE-1') {
-           when {
-             branch 'main'
+            environment {
+                my_name = "Mohan"
             }
-   
-            steps{
-                sh '''
-                echo "this is stage since we are in main branch"
-                '''
-            }
-        }
+            agent none
 
-        stage('STAGE-2'){
-                when {
-                        branch 'test'
-                 }  
-            steps{
-                sh '''
-                echo "this is stage2 we are in branch test"
-                '''
-            }    
-        }
-    }
+                stages {
+                    stage('first-stage'){
+                         
+                         steps {
+                           
+                            sh '''
+                            echo "this is first stage"
+                            sleep 5
+                            '''                              
+                        }
+                    }
+
+                    stage('second-stage'){
+
+                        steps {
+                            
+                            sh '''
+                            sleep 5
+                            echo "second stage"
+                            '''
+                        }
+
+                    }
+
+
+
+                }
+
+
+
+
+
+
+
+
+
+
 }
-
-
