@@ -7,40 +7,87 @@ pipeline {
             agent none
 
                 stages {
+
                     stage('first-stage'){
-                    agent {
-                             label 'slave1'
-                    }
+                    
+                            parallel {
 
-                    when {
-                        expression{ params.greeting == "hello" }
-                    }
-                         
-                         steps {
-                           
-                            sh '''
-                            echo "this is first stage"
-                            sleep 5
-                            '''                              
+                                stage('testing-first-stage') {
+                        
+                                    agent {
+                                    label 'slave1'
+                                    }
+
+                                    when {
+                                        expression{ params.greeting == "hello" }
+                                    }
+
+                                    steps {
+                                    sh '''
+                                    echo "testing first stage"
+                                    sleep 5
+                                    '''
+                                    }
+                                }
+
+                                stage('testing2-first-stage') {
+
+                                    agent {
+                                    label 'slave2'
+                                    }
+                                        when {
+                                             expression{ params.greeting == "hi" }
+                                        }
+                                    steps {
+
+                                        sh '''
+                                        sleep 5
+                                        echo "testing second time "
+                                        '''
+                                    }
+
+                                }
+                                  
+                            }
+                    }    
+
+                    stage('second-stage') {
+                        
+                        agent {
+                            label 'slave1'
                         }
-                    }
+                            steps {
+                                sh '''
+                                sleep 5
+                                echo "this second stage"
+                                '''
+                             }
+                     }
 
-                    stage('second-stage'){
-                    agent {
-                             label 'slave2'
-                    }
-                    when {
-                        expression{ params.greeting == "hi" }
-                    }
+
+                     stage('third-stage') {
+
+                        agent {
+                            label 'slave2'
+                        }
+
                         steps {
-                            
                             sh '''
                             sleep 5
-                            echo "second stage"
+                            echo "this is third stage"
                             '''
+
                         }
+                     } 
 
-                    }
-                }
+                        
+                        
+                }       
 
+                    
+
+                    
+                  
+                    
 }
+
