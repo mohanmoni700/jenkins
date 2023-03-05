@@ -1,4 +1,6 @@
 pipeline {
+        parameters { string defaultValue: 'hello', name: 'greeting' }
+
             environment {
                 my_name = "Mohan"
             }
@@ -10,6 +12,9 @@ pipeline {
                              label 'slave1'
                     }
 
+                    when {
+                        expression{ params.greeting == "hello" }
+                    }
                          
                          steps {
                            
@@ -23,6 +28,9 @@ pipeline {
                     stage('second-stage'){
                     agent {
                              label 'slave2'
+                    }
+                    when {
+                        expression{ params.greeting == "hi" }
                     }
                         steps {
                             
